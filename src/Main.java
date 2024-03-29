@@ -43,6 +43,12 @@ public class Main extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Performs a search operation.
+     *
+     * @param  None    This function does not take any parameters.
+     * @return None    This function does not return any value.
+     */
     private void performSearch() {
         resultArea.setText("");
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -57,6 +63,14 @@ public class Main extends JFrame {
         }
     }
 
+    /**
+     * Searches for a word in a file.
+     *
+     * @param  filePath       the path of the file to search in
+     * @param  wordToFind     the word to search for
+     * @param  caseSensitive  whether the search should be case sensitive or not
+     * @throws IOException    if an I/O error occurs
+     */
     private void searchWordInFile(String filePath, String wordToFind, boolean caseSensitive) throws IOException {
         List<String> lines = Files.readAllLines(Paths.get(filePath));
         for (int i = 0; i < lines.size(); i++) {
@@ -71,6 +85,11 @@ public class Main extends JFrame {
         }
     }
 
+    /**
+     * The main method of the Java program. It is the entry point of the program.
+     *
+     * @param  args  the command line arguments passed to the program
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Main::new);
     }
