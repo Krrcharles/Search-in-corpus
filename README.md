@@ -1,5 +1,5 @@
 # Search in Corpus
-
+Un petit projet pour apprendre le java
 ## À propos
 
 Search in Corpus est une application Java avec une interface graphique qui permet aux utilisateurs de rechercher un mot spécifique dans plusieurs fichiers texte. Cette application offre la possibilité de choisir si la recherche doit prendre en compte la casse, rendant la recherche plus flexible selon les besoins de l'utilisateur.
