@@ -1,17 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class TextSearchGUI extends JFrame {
+public class Main extends JFrame {
     private JTextArea resultArea;
     private JTextField wordField;
     private final JFileChooser fileChooser;
 
-    public TextSearchGUI() {
+    public Main() {
         super("Text Search App");
         setLayout(new BorderLayout());
 
@@ -67,6 +66,6 @@ public class TextSearchGUI extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(TextSearchGUI::new);
+        SwingUtilities.invokeLater(Main::new);
     }
 }
