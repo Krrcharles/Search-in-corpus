@@ -8,23 +8,26 @@ import java.util.List;
 public class Main extends JFrame {
     private JTextArea resultArea;
     private JTextField wordField;
+    private JCheckBox caseSensitiveCheckBox; // Checkbox pour la sensibilité à la casse
     private final JFileChooser fileChooser;
 
     public Main() {
         super("Text Search App");
-        setLayout(new BorderLayout());
+        setLayout(new FlowLayout());
 
         // Champ de texte pour le mot à rechercher
         wordField = new JTextField(20);
-        JPanel northPanel = new JPanel();
-        northPanel.add(new JLabel("Mot à chercher :"));
-        northPanel.add(wordField);
-        add(northPanel, BorderLayout.NORTH);
+        add(new JLabel("Mot à chercher :"));
+        add(wordField);
+
+        // Checkbox pour la sensibilité à la casse
+        caseSensitiveCheckBox = new JCheckBox("Sensible à la casse", false);
+        add(caseSensitiveCheckBox);
 
         // Zone de texte pour afficher les résultats
         resultArea = new JTextArea(20, 50);
         resultArea.setEditable(false);
-        add(new JScrollPane(resultArea), BorderLayout.CENTER);
+        add(new JScrollPane(resultArea));
 
         // Sélectionneur de fichiers
         fileChooser = new JFileChooser();
@@ -33,9 +36,7 @@ public class Main extends JFrame {
         // Bouton pour choisir les fichiers et démarrer la recherche
         JButton searchButton = new JButton("Chercher dans les fichiers");
         searchButton.addActionListener(e -> performSearch());
-        JPanel southPanel = new JPanel();
-        southPanel.add(searchButton);
-        add(southPanel, BorderLayout.SOUTH);
+        add(searchButton);
 
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,7 +48,7 @@ public class Main extends JFrame {
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             for (var file : fileChooser.getSelectedFiles()) {
                 try {
-                    searchWordInFile(file.getPath(), wordField.getText());
+                    searchWordInFile(file.getPath(), wordField.getText(), caseSensitiveCheckBox.isSelected());
                 } catch (IOException e) {
                     resultArea.append("Erreur lors de la lecture du fichier : " + file.getName() + "\n");
                     e.printStackTrace();
@@ -56,10 +57,15 @@ public class Main extends JFrame {
         }
     }
 
-    private void searchWordInFile(String filePath, String wordToFind) throws IOException {
+    private void searchWordInFile(String filePath, String wordToFind, boolean caseSensitive) throws IOException {
         List<String> lines = Files.readAllLines(Paths.get(filePath));
         for (int i = 0; i < lines.size(); i++) {
-            if (lines.get(i).contains(wordToFind)) {
+            String line = lines.get(i);
+            if (!caseSensitive) {
+                line = line.toLowerCase();
+                wordToFind = wordToFind.toLowerCase();
+            }
+            if (line.contains(wordToFind)) {
                 resultArea.append("Mot \"" + wordToFind + "\" trouvé dans " + filePath + " à la ligne " + (i + 1) + "\n");
             }
         }
